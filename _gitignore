@@ -8,7 +8,6 @@ db/pgdata
 /coverage
 
 # production
-frontend/build
 api/tmp
 
 # misc
