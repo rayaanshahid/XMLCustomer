@@ -12,6 +12,7 @@ WORKDIR /go/src/XMLCustomer/api
 
 # added vendor services will need to be included here
 RUN go get ./vendor/database
+RUN go get ./parser
 
 RUN go get ./
 RUN go build

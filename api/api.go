@@ -2,7 +2,7 @@ package main
 
 import (
 	"database"
-	"parser"
+	"XMLCustomer/api/parser"
 	"encoding/json"
 	"github.com/julienschmidt/httprouter"
 	"log"
@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-func getClient(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func getClientByID(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	//setCors(w)
 	var tableclient database.Tableclient
 	database.DB.Where("Invoice_Point_ID = ?", ps.ByName("invoicePointId")).First(&tableclient)
@@ -22,7 +22,7 @@ func getClient(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	w.Write(res)
 }
 
-func getClients(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func getAllClients(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	//setCors(w)
 	var tableclients []database.Tableclient
 	database.DB.Find(&tableclients)
@@ -40,8 +40,8 @@ func main() {
 	// add router and routes
 	router := httprouter.New()
 
-	router.GET("/clients/:invoicePointId", getClient)
-	router.GET("/clients", getClients)
+	router.GET("/clients/:invoicePointId", getClientByID)
+	router.GET("/clients", getAllClients)
 
 	// add database
 	_, err := database.Init()
@@ -53,7 +53,7 @@ func main() {
 	log.Println("connected to DB")
 
 	var clients parser.Clients
-	clients = parser.getClients()
+	clients = parser.GetClients()
 	//You can insert multiple records too
 	for i:=0;i<len(clients.Clients);i++{
 			tableclient := database.Tableclient {Client_Name: clients.Clients[i].Client_Name, Invoice_Name:clients.Clients[i].Invoice_Name,
@@ -61,7 +61,7 @@ func main() {
 				Invoice_Add2:clients.Clients[i].Invoice_Add2, Invoice_Town:clients.Clients[i].Invoice_Town, Invoice_Country:clients.Clients[i].Invoice_Country,
 				Invoice_Postcode:clients.Clients[i].Invoice_Postcode, Invoice_Tel_No:clients.Clients[i].Invoice_Tel_No,
 				Invoice_Email:clients.Clients[i].Invoice_Email, Owning_Region:clients.Clients[i].Owning_Region}
-			DB := db.Create(&tableclient)
+			DB := database.DB.Create(&tableclient)
 			if DB.Error != nil {
 				log.Print("Row did not enter !!!")
 			}else {

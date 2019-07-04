@@ -84,7 +84,7 @@ type Timesheet struct {
     Assignment_ID string   `xml:"Assignment_ID"`
 }
 
-func getClients() Clients{
+func GetClients() Clients{
   // Open our xmlFile
   xmlFileClient, err := os.Open("files/Client.xml")
   // if we os.Open returns an error then handle it
@@ -107,7 +107,7 @@ func getClients() Clients{
   return clients
 }
 
-func getAssignments() Assignments{
+func GetAssignments() Assignments{
   // Open our xmlFile
   xmlFileAssignment, err := os.Open("files/Assignment.xml")
   // if we os.Open returns an error then handle it
@@ -130,7 +130,7 @@ func getAssignments() Assignments{
   return assignments
 }
 
-func getTimesheets() Timesheets{
+func GetTimesheets() Timesheets{
   // Open our xmlFile
   xmlFileTimesheet, err := os.Open("files/Timesheet.xml")
   // if we os.Open returns an error then handle it
