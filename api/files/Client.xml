@@ -26,4 +26,30 @@
     <Invoice_Email></Invoice_Email>
     <Owning_Region>Sverige</Owning_Region>
   </Client>
-  <Client><Client_Name>Midroc Property Development</Client_Name><Invoice_Name>Midroc Property Development</Invoice_Name><Invoice_Point_ID>1093769</Invoice_Point_ID><Invoice_Add1>Jungmansgatan 12</Invoice_Add1><Invoice_Add2></Invoice_Add2><Invoice_Town>Malm&#246;</Invoice_Town><Invoice_Country>SWEDEN</Invoice_Country><Invoice_Postcode>211 19</Invoice_Postcode><Invoice_Tel_No></Invoice_Tel_No><Invoice_Email>karin.skiold@midroc.se</Invoice_Email><Owning_Region>Sverige</Owning_Region></Client><Client><Client_Name>Ericsson AB</Client_Name><Invoice_Name>Ericsson AB</Invoice_Name><Invoice_Point_ID>1093927</Invoice_Point_ID><Invoice_Add1>Accounts Payable</Invoice_Add1><Invoice_Add2>Box 3</Invoice_Add2><Invoice_Town>Stockholm</Invoice_Town><Invoice_Country>SWEDEN</Invoice_Country><Invoice_Postcode>16480</Invoice_Postcode><Invoice_Tel_No></Invoice_Tel_No><Invoice_Email></Invoice_Email><Owning_Region>Sverige</Owning_Region></Client></Client_Export>
+  <Client>
+    <Client_Name>Midroc Property Development</Client_Name>
+    <Invoice_Name>Midroc Property Development</Invoice_Name>
+    <Invoice_Point_ID>1093769</Invoice_Point_ID>
+    <Invoice_Add1>Jungmansgatan 12</Invoice_Add1>
+    <Invoice_Add2></Invoice_Add2>
+    <Invoice_Town>Malm&#246;</Invoice_Town>
+    <Invoice_Country>SWEDEN</Invoice_Country>
+    <Invoice_Postcode>211 19</Invoice_Postcode>
+    <Invoice_Tel_No></Invoice_Tel_No>
+    <Invoice_Email>karin.skiold@midroc.se</Invoice_Email>
+    <Owning_Region>Sverige</Owning_Region>
+  </Client>
+  <Client>
+    <Client_Name>Ericsson AB</Client_Name>
+    <Invoice_Name>Ericsson AB</Invoice_Name>
+    <Invoice_Point_ID>1093927</Invoice_Point_ID>
+    <Invoice_Add1>Accounts Payable</Invoice_Add1>
+    <Invoice_Add2>Box 3</Invoice_Add2>
+    <Invoice_Town>Stockholm</Invoice_Town>
+    <Invoice_Country>SWEDEN</Invoice_Country>
+    <Invoice_Postcode>16480</Invoice_Postcode>
+    <Invoice_Tel_No></Invoice_Tel_No>
+    <Invoice_Email></Invoice_Email>
+    <Owning_Region>Sverige</Owning_Region>
+  </Client>
+</Client_Export>
