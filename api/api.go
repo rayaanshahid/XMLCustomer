@@ -2,6 +2,7 @@ package main
 
 import (
 	"database"
+	"parser"
 	"encoding/json"
 	"github.com/julienschmidt/httprouter"
 	"log"
@@ -51,7 +52,8 @@ func main() {
 
 	log.Println("connected to DB")
 
-	clients := getClients()
+	var clients parser.Clients
+	clients = parser.getClients()
 	//You can insert multiple records too
 	for i:=0;i<len(clients.Clients);i++{
 			tableclient := database.Tableclient {Client_Name: clients.Clients[i].Client_Name, Invoice_Name:clients.Clients[i].Invoice_Name,
