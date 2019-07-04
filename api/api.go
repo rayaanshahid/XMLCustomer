@@ -24,16 +24,16 @@ func getClientByID(w http.ResponseWriter, r *http.Request, ps httprouter.Params)
 
 func getAllClients(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	//setCors(w)
-	logs.Println("Entered getAllClients() in API !!")
+	log.Println("Entered getAllClients() in API !!")
 	var tableclients []database.Tableclient
 	DB := database.DB.Find(&tableclients)
 	if DB.Error != nil {
-		logs.Println("Eror while finding in database in getAllClients() in API !!")
-		http.Error(w, err.Error(), 500)
+		log.Println("Error while finding in database in getAllClients() in API !!")
+		http.Error(w, "error while querying",500)
 		return
 	}
 	res, err := json.Marshal(tableclients)
-	logs.Println("took some result in getAllClients() in API !!")
+	log.Println("took some result in getAllClients() in API !!")
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
