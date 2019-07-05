@@ -37,7 +37,7 @@ func getAssignmentByID(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 func getTimesheetByID(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	//setCors(w)
 	var tabletimesheet database.Tabletimesheet
-	database.DB.Where("Monthly_Timesheet_ID = ?", ps.ByName("monthlyTimesheetId")).First(&tabletimesheet)
+	database.DB.Where("Time_Line_ID = ?", ps.ByName("timelineId")).First(&tabletimesheet)
 	res, err := json.Marshal(tabletimesheet)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
@@ -103,29 +103,7 @@ func getAllTimesheets(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	w.Write(res)
 }
 
-func main() {
-	defer database.DB.Close()
-
-	// add router and routes
-	router := httprouter.New()
-
-	router.GET("/clients/:invoicePointId", getClientByID)
-	router.GET("/clients", getAllClients)
-	router.GET("/assignments/:assignmentId", getAssignmentByID)
-	router.GET("/assignments", getAllAssignments)
-	router.GET("/timesheets/:monthlyTimesheetId", getTimesheetByID)
-	router.GET("/timesheets", getAllTimesheets)
-
-	// add database
-	_, err := database.Init()
-	if err != nil {
-		log.Println("connection to DB failed, aborting...")
-		log.Fatal(err)
-	}
-
-	log.Println("connected to DB")
-
-	//var clients parser.Clients
+func ReadDataFromXMLToDB(){
 	clients := parser.GetClients()
 	assignments := parser.GetAssignments()
 	timesheets := parser.GetTimesheets()
@@ -206,6 +184,34 @@ func main() {
 			}else {
 				log.Println("Row entered in timesheet table!!!")
 			}
+	}
+}
+
+func main() {
+	defer database.DB.Close()
+
+	// add router and routes
+	router := httprouter.New()
+
+	router.GET("/clients/:invoicePointId", getClientByID)
+	router.GET("/clients", getAllClients)
+	router.GET("/assignments/:assignmentId", getAssignmentByID)
+	router.GET("/assignments", getAllAssignments)
+	router.GET("/timesheets/:timelineId", getTimesheetByID)
+	router.GET("/timesheets", getAllTimesheets)
+
+	// add database
+	_, err := database.Init()
+	if err != nil {
+		log.Println("connection to DB failed, aborting...")
+		log.Fatal(err)
+	}
+
+	log.Println("connected to DB")
+
+	ReadData := false // change this to true to read data from XML files and posting to DB tables
+	if ReadData == true {
+		ReadDataFromXMLToDB()
 	}
 
 	// print env

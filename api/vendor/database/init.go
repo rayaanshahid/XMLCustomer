@@ -11,10 +11,10 @@ var DB *gorm.DB
 var err error
 
 type Tableclient struct {
-	gorm.Model
+	//gorm.Model
 	Client_Name    string
 	Invoice_Name  string
-	Invoice_Point_ID  string
+	Invoice_Point_ID  string	`gorm:"primary_key"`
 	Invoice_Add1  string
 	Invoice_Add2  string
 	Invoice_Town  string
@@ -26,8 +26,8 @@ type Tableclient struct {
 }
 
 type Tableassignment struct {
-	gorm.Model
-	Assignment_ID   string
+	//gorm.Model
+	Assignment_ID   string	`gorm:"primary_key"`
 	Job_Title  string
 	Client_ID  string
 	Product  string
@@ -46,9 +46,9 @@ type Tableassignment struct {
 }
 
 type Tabletimesheet struct {
-    gorm.Model
+    //gorm.Model
     Monthly_Timesheet_ID    string
-    Time_Line_ID  string
+    Time_Line_ID  string	`gorm:"primary_key"`
     Time_Line_Date  string
     Normal  string
     Semester  string
@@ -87,6 +87,7 @@ func Init() (*gorm.DB, error) {
 		DB.CreateTable(&Tableclient{})
 		log.Println("Successfully Created client Table !!!")
 	}else{
+		//DB.DropTable(&Tableclient{})
 		log.Println("Already exists client Table !!!")
 	}
 
@@ -95,6 +96,7 @@ func Init() (*gorm.DB, error) {
 		DB.CreateTable(&Tableassignment{})
 		log.Println("Successfully Created assignment Table !!!")
 	}else{
+		//DB.DropTable(&Tableassignment{})
 		log.Println("Already exists assignment Table !!!")
 	}
 
@@ -103,6 +105,7 @@ func Init() (*gorm.DB, error) {
 		DB.CreateTable(&Tabletimesheet{})
 		log.Println("Successfully Created timesheet Table !!!")
 	}else{
+		//DB.DropTable(&Tabletimesheet{})
 		log.Println("Already exists timesheet Table !!!")
 	}
 
