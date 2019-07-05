@@ -66,6 +66,15 @@ type Tabletimesheet struct {
     Assignment_ID string
 }
 
+type MergedData struct {
+	Invoice_Point_ID string
+	Assignment_ID string
+	Time_Line_ID string
+	Monthly_Timesheet_ID    string
+	Client_Name    string
+	Job_Title  string
+}
+
 func Init() (*gorm.DB, error) {
 	// set up DB connection and then attempt to connect 5 times over 25 seconds
 	connectionParams := "user=docker password=docker sslmode=disable host=db"

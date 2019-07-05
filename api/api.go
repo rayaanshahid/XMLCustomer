@@ -86,7 +86,7 @@ func getAllAssignments(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 
 func getAllTimesheets(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	//setCors(w)
-	//log.Println("Entered getAllAssignments() in API !!")
+	log.Println("Entered getAllTimesheets() in API !!")
 	var tabletimesheets []database.Tabletimesheet
 	DB := database.DB.Find(&tabletimesheets)
 	if DB.Error != nil {
@@ -103,7 +103,30 @@ func getAllTimesheets(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	w.Write(res)
 }
 
+func getMergedDataByID(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	//setCors(w)
+	log.Println("Entered getMergedDataByID() in API !!")
+	var results database.MergedData
+	DB := database.DB.Table("tabletimesheets").Select("tableclients.Invoice_Point_ID, tableassignments.Assignment_ID, tabletimesheets.Time_Line_ID,tabletimesheets.Monthly_Timesheet_ID, tableclients.Client_Name, tableassignments.Job_Title").Joins("JOIN tableclients on tableclients.Invoice_Point_ID = tabletimesheets.Invoice_ID").Joins("JOIN tableassignments on tableassignments.Assignment_ID = tabletimesheets.Assignment_ID").Where("tabletimesheets.Invoice_ID = ? and tabletimesheets.Assignment_ID = ?",ps.ByName("invoiceID"),ps.ByName("assignmentID")).Find(&results)
+
+	//var tabletimesheets []database.Tabletimesheet
+	//DB := database.DB.Find(&tabletimesheets)
+	if DB.Error != nil {
+		log.Println("Error while finding in database in getMergedDataByID() in API !!", DB.Error)
+		http.Error(w, "error while querying",500)
+		return
+	}
+	res, err := json.Marshal(results)
+	log.Println("took result in getMergedDataByID() in API !!")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	w.Write(res)
+}
+
 func ReadDataFromXMLToDB(){
+	//Read data from xml files
 	clients := parser.GetClients()
 	assignments := parser.GetAssignments()
 	timesheets := parser.GetTimesheets()
@@ -199,6 +222,7 @@ func main() {
 	router.GET("/assignments", getAllAssignments)
 	router.GET("/timesheets/:timelineId", getTimesheetByID)
 	router.GET("/timesheets", getAllTimesheets)
+	router.GET("/merged/:invoiceID/:assignmentID",getMergedDataByID)
 
 	// add database
 	_, err := database.Init()
