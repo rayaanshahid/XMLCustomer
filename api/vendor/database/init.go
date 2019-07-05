@@ -25,6 +25,47 @@ type Tableclient struct {
 	Owning_Region string
 }
 
+type Tableassignment struct {
+	gorm.Model
+	Assignment_ID   string
+	Job_Title  string
+	Client_ID  string
+	Product  string
+	Pay_Type  string
+	Charge_Amount  string
+	PO_Number string
+	Cand_FName  string
+	Cand_LName  string
+	Cand_ID string
+	Invoice_ID string
+	Owning_Cons string
+	Assig_Con string
+	Invoice_Fee string
+	Job_ID string
+	Rate_1_Amount string
+}
+
+type Tabletimesheet struct {
+    gorm.Model
+    Monthly_Timesheet_ID    string
+    Time_Line_ID  string
+    Time_Line_Date  string
+    Normal  string
+    Semester  string
+    Sjukfranvaro_karensdag  string
+    Sjukfranvaro_dag_2_14 string
+    Vard_av_barn  string
+    Overtid_1  string
+    Overtid_2 string
+    Foraldraledighet string
+    Ovrig_Franvaro string
+    Rate1_Amount string
+    Cand_ID string
+    Job_ID string
+    Invoice_ID string
+    Assignment_ID string
+}
+
 func Init() (*gorm.DB, error) {
 	// set up DB connection and then attempt to connect 5 times over 25 seconds
 	connectionParams := "user=docker password=docker sslmode=disable host=db"
@@ -44,13 +85,26 @@ func Init() (*gorm.DB, error) {
 	// create table if it does not exist
 	if !DB.HasTable(&Tableclient{}) {
 		DB.CreateTable(&Tableclient{})
-		log.Println("Successfully Created a Table !!!")
+		log.Println("Successfully Created client Table !!!")
 	}else{
-		log.Println("Already exists Table !!!")
+		log.Println("Already exists client Table !!!")
 	}
 
-	//testPost := Post{Author: "Dorper", Message: "GoDoRP is Dope"}
-	//DB.Create(&testPost)
+	// create table if it does not exist
+	if !DB.HasTable(&Tableassignment{}) {
+		DB.CreateTable(&Tableassignment{})
+		log.Println("Successfully Created assignment Table !!!")
+	}else{
+		log.Println("Already exists assignment Table !!!")
+	}
+
+	// create table if it does not exist
+	if !DB.HasTable(&Tabletimesheet{}) {
+		DB.CreateTable(&Tabletimesheet{})
+		log.Println("Successfully Created timesheet Table !!!")
+	}else{
+		log.Println("Already exists timesheet Table !!!")
+	}
 
 	return DB, err
 }

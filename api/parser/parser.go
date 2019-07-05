@@ -73,10 +73,10 @@ type Timesheet struct {
     Sjukfranvaro_karensdag  string  `xml:"Sjukfrånvaro_karensdag"`
     Sjukfranvaro_dag_2_14 string  `xml:"Sjukfrånvaro_dag_2-14"`
     Vard_av_barn  string   `xml:"Vård_av_barn"`
-    overtid_1  string   `xml:"Övertid_1"`
-    overtid_2 string   `xml:"Övertid_2"`
+    Overtid_1  string   `xml:"Övertid_1"`
+    Overtid_2 string   `xml:"Övertid_2"`
     Foraldraledighet string   `xml:"Föräldraledighet"`
-    ovrig_Franvaro string   `xml:"Övrig_Frånvaro"`
+    Ovrig_Franvaro string   `xml:"Övrig_Frånvaro"`
     Rate1_Amount string   `xml:"Rate1_Amount"`
     Cand_ID string   `xml:"Cand_ID"`
     Job_ID string   `xml:"Job_ID"`
