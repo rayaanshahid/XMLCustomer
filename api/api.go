@@ -106,17 +106,35 @@ func getAllTimesheets(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 func getMergedDataByID(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	//setCors(w)
 	log.Println("Entered getMergedDataByID() in API !!")
-	var results database.MergedData
-	DB := database.DB.Table("tabletimesheets").Select("tableclients.Invoice_Point_ID, tableassignments.Assignment_ID, tabletimesheets.Time_Line_ID,tabletimesheets.Monthly_Timesheet_ID, tableclients.Client_Name, tableassignments.Job_Title").Joins("JOIN tableclients on tableclients.Invoice_Point_ID = tabletimesheets.Invoice_ID").Joins("JOIN tableassignments on tableassignments.Assignment_ID = tabletimesheets.Assignment_ID").Where("tabletimesheets.Invoice_ID = ? and tabletimesheets.Assignment_ID = ?",ps.ByName("invoiceID"),ps.ByName("assignmentID")).Find(&results)
+	log.Println("Timeline ID: ",ps.ByName("timelineId"))
 
-	//var tabletimesheets []database.Tabletimesheet
-	//DB := database.DB.Find(&tabletimesheets)
+	var tabletimesheet database.Tabletimesheet
+	var tableclient database.Tableclient
+	var tableassignment database.Tableassignment
+
+	database.DB.Where("Time_Line_ID = ?", ps.ByName("timelineId")).First(&tabletimesheet)
+	database.DB.Where("Invoice_Point_ID = ?", tabletimesheet.Invoice_ID).First(&tableclient)
+	database.DB.Where("Assignment_ID = ?", tabletimesheet.Assignment_ID).First(&tableassignment)
+
+	mergedData := database.MergedData {
+		Table_Timesheet: tabletimesheet,
+		Table_Client: tableclient,
+		Table_Assignment: tableassignment,
+	}
+
+	/*DB := database.DB.Table("tabletimesheets").
+	Select("tableclients.Invoice_Point_ID, tableassignments.Assignment_ID, tabletimesheets.Time_Line_ID,tabletimesheets.Monthly_Timesheet_ID, tableclients.Client_Name, tableassignments.Job_Title").
+	Joins("JOIN tableclients on tabletimesheets.Invoice_ID = tableclients.Invoice_Point_ID").
+	Joins("JOIN tableassignments on tabletimesheets.Assignment_ID = tableassignments.Assignment_ID").
+	Where("tabletimesheets.Invoice_ID = ? and tabletimesheets.Assignment_ID = ?",ps.ByName("invoiceID"),ps.ByName("assignmentID")).
+	Find(&results)
+
 	if DB.Error != nil {
 		log.Println("Error while finding in database in getMergedDataByID() in API !!", DB.Error)
 		http.Error(w, "error while querying",500)
 		return
-	}
-	res, err := json.Marshal(results)
+	}*/
+	res, err := json.Marshal(mergedData)
 	log.Println("took result in getMergedDataByID() in API !!")
 	if err != nil {
 		http.Error(w, err.Error(), 500)
@@ -222,7 +240,8 @@ func main() {
 	router.GET("/assignments", getAllAssignments)
 	router.GET("/timesheets/:timelineId", getTimesheetByID)
 	router.GET("/timesheets", getAllTimesheets)
-	router.GET("/merged/:invoiceID/:assignmentID",getMergedDataByID)
+	//router.GET("/merged/:invoiceID/:assignmentID",getMergedDataByID)
+	router.GET("/merged/:timelineId",getMergedDataByID)
 
 	// add database
 	_, err := database.Init()

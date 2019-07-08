@@ -67,12 +67,9 @@ type Tabletimesheet struct {
 }
 
 type MergedData struct {
-	Invoice_Point_ID string
-	Assignment_ID string
-	Time_Line_ID string
-	Monthly_Timesheet_ID    string
-	Client_Name    string
-	Job_Title  string
+	Table_Timesheet Tabletimesheet
+	Table_Client	Tableclient
+	Table_Assignment	Tableassignment
 }
 
 func Init() (*gorm.DB, error) {
