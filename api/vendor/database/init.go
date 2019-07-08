@@ -67,9 +67,44 @@ type Tabletimesheet struct {
 }
 
 type MergedData struct {
-	Table_Timesheet Tabletimesheet
-	Table_Client	Tableclient
-	Table_Assignment	Tableassignment
+  Monthly_Timesheet_ID string
+  Time_Line_ID string
+  Time_Line_Date string
+  Normal string
+  Semester string
+  Sjukfranvaro_karensdag string
+  Sjukfranvaro_dag_2_14 string
+  Vard_av_barn string
+  Overtid_1 string
+  Overtid_2 string
+  Foraldraledighet string
+  Ovrig_Franvaro string
+  Rate1_Amount string
+  Job_ID string
+  Invoice_ID string
+  Client_Name string
+  Invoice_Name string
+  Invoice_Add1 string
+  Invoice_Add2 string
+  Invoice_Town string
+  Invoice_Country string
+  Invoice_Postcode string
+  Invoice_Tel_No string
+  Invoice_Email string
+  Owning_Region string
+  Assignment_ID string
+  Job_Title string
+  Client_ID string
+  Product string
+  Pay_Type string
+  Charge_Amount string
+  PO_Number string
+  Cand_FName string
+  Cand_LName string
+  Cand_ID string
+  Owning_Cons string
+  Assig_Con string
+  Invoice_Fee string
 }
 
 func Init() (*gorm.DB, error) {
